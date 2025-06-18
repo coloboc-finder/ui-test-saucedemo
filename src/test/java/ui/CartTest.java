@@ -1,10 +1,9 @@
 package ui;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Selenide.*;
@@ -16,6 +15,20 @@ public class CartTest {
     private static final String BASE_URL = "https://www.saucedemo.com";
     private static final String VALID_USERNAME = "standard_user";
     private static final String VALID_PASSWORD = "secret_sauce";
+
+    @BeforeAll
+    static void configure() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--incognito");
+        options.addArguments("--disable-save-password-bubble");
+        options.addArguments("--disable-infobars");
+        options.addArguments("--disable-notifications");
+        options.addArguments("--disable-extensions");
+
+        Configuration.browser = "chrome";
+        Configuration.browserCapabilities = options;
+        Configuration.browserSize = "1920x1080";
+    }
 
     @BeforeEach
     public void setUp() {

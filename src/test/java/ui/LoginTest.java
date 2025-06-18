@@ -1,10 +1,9 @@
 package ui;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
@@ -17,6 +16,20 @@ public class LoginTest {
     private static final String VALID_PASSWORD = "secret_sauce";
     private static final String INVALID_USERNAME = "standard_user000";
     private static final String INVALID_PASSWORD = "secret_sauce000";
+
+    @BeforeAll
+    static void configure() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--incognito");
+        options.addArguments("--disable-save-password-bubble");
+        options.addArguments("--disable-infobars");
+        options.addArguments("--disable-notifications");
+        options.addArguments("--disable-extensions");
+
+        Configuration.browser = "chrome";
+        Configuration.browserCapabilities = options;
+        Configuration.browserSize = "1920x1080";
+    }
 
     @BeforeEach
     public void setUp() {
